@@ -6,6 +6,10 @@
 
 body {
     background-color: var(--light-blue);
+
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
 }
 
 .logo {
@@ -24,10 +28,25 @@ body {
     display: flex;
     flex-direction: column;
 
-    height: 100vh;
+    height: 90vh;
     
     justify-content: center;
     align-items: center;
+}
+
+.rodape {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 10vh;
+
+    background: linear-gradient(180deg, var(--light-blue), lightgray);
+}
+
+.rodape-autor {
+    color: var(--dark-blue);
 }
 
 /* Tablets */
