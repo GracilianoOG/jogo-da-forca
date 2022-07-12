@@ -1,0 +1,49 @@
+:root {
+    --white: #FFFFFF;
+    --light-blue: #F3F5FC;
+    --dark-blue: #0A3871;
+}
+
+body {
+    background-color: var(--light-blue);
+}
+
+.logo {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+}
+
+.container {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.container-principal {
+    display: flex;
+    flex-direction: column;
+
+    height: 100vh;
+    
+    justify-content: center;
+    align-items: center;
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) {
+
+    .logo {
+        top: 75px;
+        left: 40px;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+    .logo {
+        top: 40px;
+        left: 40px;
+    }
+}

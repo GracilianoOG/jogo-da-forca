@@ -7,9 +7,10 @@
 
     <!-- Estilos da página -->
     <link rel="stylesheet" href="css/reset.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/botao.css">
 
-    <!-- Fonte Inter -->
+    <!-- Fonte Inter | Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> 
@@ -17,13 +18,16 @@
     <title>Jogo da Forca</title>
 </head>
 <body>
-    <header class="cabecalho"></header>
-    <main>
+    <header class="cabecalho container">
         <img src="img/logo.svg" alt="Logo da Alura" class="logo">
+    </header>
+    <main>
         <div class="container">
-            <!-- <canvas>Recurso não suportado pelo navegador</canvas> -->
-            <button class="botao botao-comecar-jogo" type="button">Começar a jogar</button>
-            <button class="botao botao-adiciona-palavra" type="button">Adicionar nova palavra</button>
+            <div class="container-principal">
+                <!-- <canvas>Recurso não suportado pelo navegador</canvas> -->
+                <button class="botao botao-comecar-jogo" type="button">Começar a jogar</button>
+                <button class="botao botao-adiciona-palavra" type="button">Adicionar nova palavra</button>
+            </div>
         </div>
     </main>
     <footer class="rodape">
