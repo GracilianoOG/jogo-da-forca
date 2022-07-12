@@ -2,10 +2,11 @@
     font-size: 1rem;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
+    text-decoration: none;
 }
 
 .botao-comecar-jogo {
-    padding: 2.5rem 6rem;
+    padding: 3rem 6rem;
 
     border: none;
     border-radius: 24px;
@@ -19,7 +20,7 @@
 }
 
 .botao-adiciona-palavra {
-    padding: 1.4rem 4rem;
+    padding: 2rem 4rem;
     border: 1px solid var(--dark-blue);
     border-radius: 24px;
 
@@ -31,8 +32,8 @@
 
 /* Desktop */
 @media screen and (min-width: 1024px) {
-    
+
     .botao-adiciona-palavra {
-        padding: 2rem 4.5rem;
+        padding: 2.5rem 4.5rem;
     }
 }
