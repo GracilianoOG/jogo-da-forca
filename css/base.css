@@ -1,26 +1,30 @@
-/* Cores */
+/* Raíz */
 :root {
     --white: #FFFFFF;
     --light-blue: #F3F5FC;
     --dark-blue: #0A3871;
 }
 
+/* HTML */
 html {
     font-size: 16px;
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 }
 
+/* Corpo da página */
 body {
     background-color: var(--light-blue);
 }
 
+/* Logo da página */
 .logo {
     position: absolute;
     top: 24px;
     left: 16px;
 }
 
+/* Container */
 .container {
     position: relative;
     max-width: 1440px;
@@ -46,6 +50,26 @@ body {
 .campo-adiciona-palavra {
     width: 340px;
     height: 200px;
+
+    resize: none;
+    outline: none;
+    border: none;
+
+    background-color: var(--light-blue);
+    color: var(--dark-blue);
+
+    font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+}
+
+::placeholder{
+    font-size: 1.5rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    color: var(--dark-blue);
+    opacity: 0.8;
 }
 
 /* Rodapé */
