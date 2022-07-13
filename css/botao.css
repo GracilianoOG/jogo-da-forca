@@ -1,6 +1,9 @@
 .botao {
     text-decoration: none;
+    text-align: center;
     border-radius: 24px;
+    width: 340px;
+    padding: 1.5rem 0;
 }
 
 .botao-escuro {
@@ -20,11 +23,12 @@
 }
 
 #botao-comeca-jogo {
-    padding: 3rem 6rem;
+    padding: 3rem 0;
 }
 
 #botao-adiciona-palavra {
-    padding: 2rem 4rem;
+    padding: 2rem 0;
+    width: 320px;
 }
 
 /* Tablets */
@@ -33,6 +37,7 @@
 @media screen and (min-width: 1024px) {
 
     #botao-adiciona-palavra {
-        padding: 2.5rem 4.5rem;
+        padding: 2.5rem 0;
+        width: 340px;
     }
 }
