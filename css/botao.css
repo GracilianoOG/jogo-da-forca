@@ -1,28 +1,30 @@
 .botao {
     text-decoration: none;
+    border-radius: 24px;
 }
 
-.botao-comecar-jogo {
-    padding: 3rem 6rem;
-
+.botao-escuro {
     border: none;
-    border-radius: 24px;
 
     background-color: var(--dark-blue);
     color: var(--white);
-}
 
-.botao-comecar-jogo:first-child {
     margin-bottom: 1rem;
 }
 
-.botao-adiciona-palavra {
-    padding: 2rem 4rem;
+.botao-claro {
     border: 1px solid var(--dark-blue);
-    border-radius: 24px;
 
     background-color: var(--white);
     color: var(--dark-blue);
+}
+
+#botao-comeca-jogo {
+    padding: 3rem 6rem;
+}
+
+#botao-adiciona-palavra {
+    padding: 2rem 4rem;
 }
 
 /* Tablets */
@@ -30,7 +32,7 @@
 /* Desktop */
 @media screen and (min-width: 1024px) {
 
-    .botao-adiciona-palavra {
+    #botao-adiciona-palavra {
         padding: 2.5rem 4.5rem;
     }
 }
