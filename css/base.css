@@ -27,7 +27,7 @@ body {
     margin: 0 auto;
 }
 
-.container-principal {
+.container-conteudo {
     display: flex;
     flex-direction: column;
 
@@ -35,6 +35,17 @@ body {
     
     justify-content: center;
     align-items: center;
+
+    gap: 1rem;
+}
+
+.pagina-principal {
+    display: none;
+}
+
+.campo-adiciona-palavra {
+    width: 340px;
+    height: 200px;
 }
 
 /* Rodapé */
