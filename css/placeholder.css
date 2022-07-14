@@ -1,0 +1,8 @@
+::placeholder {
+    font-size: var(--textfield-font-size);
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+
+    color: var(--dark-blue);
+    opacity: 0.8;
+}
