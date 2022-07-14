@@ -29,7 +29,10 @@
             </div>
 
             <div class="container-conteudo pagina-adiciona-palavra">
-                <textarea class="campo-adiciona-palavra" placeholder="Digite uma palavra ou frase" maxlength="8" autofocus></textarea>
+                <div class="container-campo">
+                    <textarea id="campo-adiciona-palavra" class="campo-adiciona-palavra" placeholder="Digite uma palavra ou frase" maxlength="8" autofocus></textarea>
+                    <label for="campo-adiciona-palavra" class="aviso-max-letras">Máx. de 8 letras</label>
+                </div>
                 <div class="container-palavra">
                     <a id="botao-salvar" class="botao botao-escuro" href="#" target="_self">Salvar e começar</a>
                     <a id="botao-cancelar" class="botao botao-claro" href="#" target="_self">Cancelar</a>

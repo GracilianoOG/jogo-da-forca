@@ -1,8 +1,11 @@
 /* Raíz */
 :root {
     --white: #FFFFFF;
+    --gray: #495057;
     --light-blue: #F3F5FC;
     --dark-blue: #0A3871;
+
+    --textfield-font-size: 2rem;
 }
 
 /* HTML */
@@ -36,20 +39,24 @@ body {
     flex-direction: column;
 
     height: 90vh;
-    
-    justify-content: flex-end; /* Eixo vertical */
-    align-items: center; /* Eixo horizontal */
 
-    gap: 3rem;
+    gap: 2rem;
 }
 
 .pagina-principal {
+    justify-content: center; /* Eixo vertical */
+    align-items: center; /* Eixo horizontal */
+}
+
+.pagina-adiciona-palavra {
+    justify-content: flex-end; /* Eixo vertical */
+    align-items: center; /* Eixo horizontal */
     display: none;
 }
 
 .campo-adiciona-palavra {
     width: 340px;
-    height: 200px;
+    height: 100%;
 
     resize: none;
     outline: none;
@@ -58,9 +65,26 @@ body {
     background-color: var(--light-blue);
     color: var(--dark-blue);
 
-    font-size: 1.5rem;
+    font-size: var(--textfield-font-size);
     font-family: 'Inter', sans-serif;
     font-weight: 400;
+}
+
+.aviso-max-letras {
+    font-size: 0.9rem;
+    color: var(--gray);
+    padding: 1rem 0 1rem 2rem;
+
+    background-image: url("../img/alert.svg");
+    background-size: 1.6rem;
+    background-repeat: no-repeat;
+    background-position: center left;
+}
+
+.container-campo {
+    display: flex;
+    flex-direction: column;
+    height: 250px;
 }
 
 .container-palavra {
@@ -70,7 +94,7 @@ body {
 }
 
 ::placeholder{
-    font-size: 1.5rem;
+    font-size: var(--textfield-font-size);
     font-family: 'Inter', sans-serif;
     font-weight: 400;
 
@@ -116,6 +140,9 @@ body {
 
     .campo-adiciona-palavra {
         width: calc(680px + 1rem);
+    }
+
+    .container-campo {
         height: 60%;
     }
 }
