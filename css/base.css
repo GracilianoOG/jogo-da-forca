@@ -52,6 +52,7 @@ body {
 .pagina-adiciona-palavra {
     justify-content: flex-end; /* Eixo vertical */
     align-items: center; /* Eixo horizontal */
+    display: none;
 }
 
 .campo-adiciona-palavra {
@@ -91,6 +92,23 @@ body {
     display: flex;
     flex-direction: column;
     gap: 1rem;
+}
+
+.pagina-jogo {
+    justify-content: flex-end; /* Eixo vertical */
+    align-items: center; /* Eixo horizontal */
+}
+
+.container-tabuleiro {
+    width: 280px;
+    height: 350px;
+}
+
+.canvas {
+    width: 280px;
+    height: 100%;
+
+    border: 1px solid black;
 }
 
 /* Tablets */
