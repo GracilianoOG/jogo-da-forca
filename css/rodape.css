@@ -1,0 +1,53 @@
+/* Rodapé */
+.rodape {
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    height: 10vh;
+    column-gap: 1rem;
+
+    background: linear-gradient(180deg, var(--light-blue), lightgray);
+}
+
+.rodape-autor {
+    color: var(--dark-blue);
+}
+
+/* Redes Sociais */
+.social-medias {
+    display: flex;
+
+    column-gap: 0.3rem;
+}
+
+.social-icone {
+    width: 1.5rem;
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) {
+
+    .logo {
+        top: 75px;
+        left: 40px;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+    .logo {
+        top: 40px;
+        left: 40px;
+    }
+
+    .social-medias {
+        margin-top: 0.5rem;
+    }
+
+    .rodape {
+        flex-direction: column;
+    }
+}
