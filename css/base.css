@@ -40,7 +40,7 @@ body {
 
     height: 90vh;
 
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .pagina-principal {
@@ -101,11 +101,12 @@ body {
 
 .container-tabuleiro {
     width: 280px;
-    height: 350px;
+    height: 60%;
+    max-height: 900px;
 }
 
 .canvas {
-    width: 280px;
+    width: 100%;
     height: 100%;
 
     border: 1px solid black;
@@ -121,6 +122,11 @@ body {
     .container-campo {
         height: 60%;
     }
+
+    .container-tabuleiro {
+        width: 450px;
+        height: 70%;
+    }
 }
 
 /* Desktop */
@@ -128,5 +134,6 @@ body {
 
     .container-conteudo {
         justify-content: center;
+        gap: 2rem
     }
 }
