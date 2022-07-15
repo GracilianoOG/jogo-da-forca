@@ -46,13 +46,11 @@ body {
 .pagina-principal {
     justify-content: center; /* Eixo vertical */
     align-items: center; /* Eixo horizontal */
-    display: none;
 }
 
 .pagina-adiciona-palavra {
     justify-content: flex-end; /* Eixo vertical */
     align-items: center; /* Eixo horizontal */
-    display: none;
 }
 
 .campo-adiciona-palavra {
@@ -110,6 +108,10 @@ body {
     height: 100%;
 
     border: 1px solid black;
+}
+
+.invisivel {
+    display: none;
 }
 
 /* Tablets */

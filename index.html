@@ -26,28 +26,28 @@
     <main>
         <div class="container">
             <div class="container-conteudo pagina-principal">
-                <a id="botao-comeca-jogo" class="botao botao-escuro" href="#" target="_self">Começar a jogar</a>
-                <a id="botao-adiciona-palavra" class="botao botao-claro" href="#" target="_self">Adicionar nova palavra</a>
+                <button id="botao-comeca-jogo" class="botao botao-escuro" type="button">Começar a jogar</button>
+                <button id="botao-adiciona-palavra" class="botao botao-claro" type="button">Adicionar nova palavra</button>
             </div>
 
-            <div class="container-conteudo pagina-adiciona-palavra">
+            <div class="container-conteudo pagina-adiciona-palavra invisivel">
                 <div class="container-campo">
-                    <textarea id="campo-adiciona-palavra" class="campo-adiciona-palavra" placeholder="Digite uma palavra ou frase" maxlength="8" autofocus></textarea>
+                    <textarea id="campo-adiciona-palavra" class="campo-adiciona-palavra" placeholder="Digite uma palavra ou frase" maxlength="8"></textarea>
                     <label for="campo-adiciona-palavra" class="aviso-max-letras">Máx. de 8 letras</label>
                 </div>
                 <div class="container-palavra">
-                    <a id="botao-salvar" class="botao botao-escuro" href="#" target="_self">Salvar e começar</a>
-                    <a id="botao-cancelar" class="botao botao-claro" href="#" target="_self">Cancelar</a>
+                    <button id="botao-salvar" class="botao botao-escuro" type="button">Salvar e começar</button>
+                    <button id="botao-cancelar" class="botao botao-claro" type="button">Cancelar</button>
                 </div>
             </div>
 
-            <div class="container-conteudo pagina-jogo">
+            <div class="container-conteudo pagina-jogo invisivel">
                 <div class="container-tabuleiro">
                     <canvas class="canvas"></canvas>
                 </div>
                 <div class="container-palavra">
-                    <a id="botao-novo-jogo" class="botao botao-escuro" href="#" target="_self">Novo jogo</a>
-                    <a id="botao-desistir" class="botao botao-claro" href="#" target="_self">Desistir</a>
+                    <button id="botao-novo-jogo" class="botao botao-escuro" type="button">Novo jogo</button>
+                    <button id="botao-desistir" class="botao botao-claro" type="button">Desistir</button>
                 </div>
             </div>
         </div>
@@ -60,6 +60,6 @@
         </ul>
     </footer>
 
-    <script></script>
+    <script src="js/main.js"></script>
 </body>
 </html>
