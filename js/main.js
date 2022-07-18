@@ -1,5 +1,3 @@
-console.log("Script do jogo da forca carregado.");
-
 // Botões
 var btnComecaJogo = document.querySelector("#botao-comeca-jogo");
 var btnAdicionaPalavra = document.querySelector("#botao-adiciona-palavra");
@@ -25,6 +23,28 @@ btnCancelar.addEventListener("click", funcCancelar);
 btnNovoJogo.addEventListener("click", funcNovoJogo);
 btnDesistir.addEventListener("click", funcDesistir);
 
+// Tabuleiro
+var c = document.querySelector(".tabuleiro");
+var ctx = c.getContext("2d");
+
+function criaRetangulos(canvas, quantidadeLinhas) {
+    var tabuleiroLargura = canvas.width;
+    var tabuleiroAltura = canvas.height;
+    var espaco = (tabuleiroLargura / quantidadeLinhas) * 0.2; // O espaço entre as linhas corresponde a x porcento da linha em si
+
+    var linhaLargura = (tabuleiroLargura / quantidadeLinhas) - espaco; // Calcula o tamanho da linha, descontando o espaço em branco
+    var linhaAltura = 5;
+    var linhaPosX = espaco / 2;
+    var linhaPosY = Math.round((tabuleiroAltura / 1.2) - (linhaAltura / 1.2)); // Coloca o meio da linha no meio do tabuleiro
+
+    for(var i = 0; i < quantidadeLinhas; i++) {
+        ctx.fillStyle = "#0A3871";
+        ctx.fillRect(linhaPosX, linhaPosY, linhaLargura, linhaAltura);
+
+        linhaPosX += linhaLargura + espaco;
+    }
+}
+
 //Funções
 function trocaDePagina(pagAntiga, pagNova) {
     pagAntiga.classList.add("invisivel");
@@ -35,6 +55,7 @@ function trocaDePagina(pagAntiga, pagNova) {
 function funcComecaJogo() {
     trocaDePagina(pagPrincipal, pagJogo);
     // Gera palavra aleatória no tabuleiro()
+    criaRetangulos(c, 8);
 }
 
 function funcAdicionaPalavra() {
@@ -53,6 +74,7 @@ function funcCancelar() {
 
 function funcNovoJogo() {
     // Gera palavra aleatória no tabuleiro()
+    criaRetangulos(c, 8);
 }
 
 function funcDesistir() {
