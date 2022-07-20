@@ -118,7 +118,7 @@ function verificaLetraDigitada(palavra, letraDigitada) {
         }
     }
 
-    if(!achouLetra) letraIncorreta(letraDigitada);
+    if(!achouLetra) letraIncorreta(letra);
 }
 
 //Funções
