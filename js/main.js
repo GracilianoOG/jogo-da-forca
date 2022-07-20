@@ -23,12 +23,14 @@ btnCancelar.addEventListener("click", funcCancelar);
 btnNovoJogo.addEventListener("click", funcNovoJogo);
 btnDesistir.addEventListener("click", funcDesistir);
 
-document.addEventListener("keydown", verificaLetra);
+document.addEventListener("keydown", verificaSeEhLetra);
 
 // Tabuleiro
 var tela = document.querySelector(".tabuleiro");
 var pintura = tela.getContext("2d");
-var palavraSecreta = ["ALURA", "ORACLE", "JAVA", "JAVASCRIPT", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
+var listaPalavraSecreta = ["ALURA", "ORACLE", "JAVA", "JAVASCRIPT", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
+var palavrasPosicao = [];
+var palavraSecreta = geraPalavraAleatoria(listaPalavraSecreta);
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -47,26 +49,64 @@ function desenhaLinhas(canvas, quantidadeLinhas) {
         pintura.fillStyle = "#0A3871";
         pintura.fillRect(linhaPosX, linhaPosY, linhaLargura, linhaAltura);
 
+        // Em desenvolvimento
+        // var tamFonte = linhaLargura + "px";
+        // pintura.font = tamFonte + " arial";
+        // pintura.fillText("A", linhaPosX, linhaPosY - 40); // + espaco / 1.5
+        // Em desenvolvimento
+
+        palavrasPosicao.push(linhaPosX);
         linhaPosX += linhaLargura + espaco;
     }
 }
 
-function geraItemAleatorio(arr) {
+function desenhaTexto(letra, x, y) {
+    pintura.font = "50px arial";
+    pintura.fillText(letra, x, y);
+}
+
+// Palavra Secreta - Funções
+function geraPalavraAleatoria(arr) {
     return arr[Math.floor(Math.random() * arr.length)]
 }
 
-function geraPalavraAleatoria(arr) {
-    var palavraAleatoria = geraItemAleatorio(arr);
-    var palavraAleatoriaTamanho = palavraAleatoria.length;
-    desenhaLinhas(tela, palavraAleatoriaTamanho);
-    console.log("Palavra: " + palavraAleatoria + " Tamanho: " + palavraAleatoriaTamanho);
+function desenhaPalavraAleatoria(str) {
+    var strTamanho = str.length;
+    desenhaLinhas(tela, strTamanho);
+    console.log("Palavra: " + str + " Tamanho: " + strTamanho);
 }
 
-function verificaLetra(evento) {
+function formataTexto(texto) {
+    return texto.toUpperCase().trim();
+}
+
+function verificaLetra(letraDigitada) {
+    var letra = formataTexto(letraDigitada);
+    var achouLetra = false;
+
+    for(var i = 0; i < palavraSecreta.length; i++) {
+        if(letra == palavraSecreta[i]) {
+            letraCorreta(letra, i);
+            achouLetra = true;
+        }
+    }
+
+    if(!achouLetra) letraIncorreta(letraDigitada);
+}
+
+function letraCorreta(letraDigitada, posicao) {
+    desenhaTexto(letraDigitada, palavrasPosicao[posicao], 500);
+}
+
+function letraIncorreta(letraDigitada) {
+    desenhaTexto(letraDigitada, 300, 750);
+}
+
+function verificaSeEhLetra(evento) {
     var codLetra = evento.which;
 
     if(codLetra >= 65 && codLetra <= 90) {
-        console.log("Letra: " + evento.key + " Código: " + evento.which);
+        verificaLetra(evento.key);
     }
 }
 
@@ -80,7 +120,7 @@ function trocaDePagina(pagAntiga, pagNova) {
 function funcComecaJogo() {
     trocaDePagina(pagPrincipal, pagJogo);
     // Gera palavra aleatória no tabuleiro()
-    geraPalavraAleatoria(palavraSecreta);
+    desenhaPalavraAleatoria(palavraSecreta);
 }
 
 function funcAdicionaPalavra() {
@@ -99,7 +139,7 @@ function funcCancelar() {
 
 function funcNovoJogo() {
     // Gera palavra aleatória no tabuleiro()
-    geraPalavraAleatoria(palavraSecreta);
+    desenhaPalavraAleatoria(palavraSecreta);
 }
 
 function funcDesistir() {
