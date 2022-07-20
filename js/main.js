@@ -30,6 +30,7 @@ var tela = document.querySelector(".tabuleiro");
 var pintura = tela.getContext("2d");
 var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "JAVASCRIPT", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
 var listaLetrasPosicao = [];
+var listaLetrasDigitadas = [];
 var palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas);
 
 // Tabuleiro - Funções
@@ -92,13 +93,15 @@ function verificaSeEhLetra(evento) {
     var codLetra = evento.which;
     
     if(codLetra >= 65 && codLetra <= 90) {
-        verificaLetra(palavraSecreta, evento.key);
+        verificaLetraDigitada(palavraSecreta, evento.key);
     }
 }
 
-function verificaLetra(palavra, letraDigitada) {
+function verificaLetraDigitada(palavra, letraDigitada) {
     var letra = formataTexto(letraDigitada);
     var achouLetra = false;
+
+    if(!listaLetrasDigitadas.includes(letra)) listaLetrasDigitadas.push(letra); else return;
 
     for(var i = 0; i < palavra.length; i++) {
         if(letra == palavra[i]) {
