@@ -99,32 +99,34 @@ function letraCorreta(letraDigitada, posicao) {
 
 function letraIncorreta(canvas, letraDigitada) {
     desenhaTexto(letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
-    console.log(distanciaLetra);
     distanciaLetra += (canvas.width / 3) / maxErros;
 }
 
 function verificaSeEhLetra(evento) {
-    var codLetra = evento.which;
-    
-    if(codLetra >= 65 && codLetra <= 90) {
-        verificaLetraDigitada(palavraSecreta, evento.key);
+    var input = formataTexto(evento.key);
+    var codLetra = 0;
+
+    if(input.length == 1) {
+        codLetra = input.charCodeAt(0);
+        if(codLetra >= 65 && codLetra <= 90) {
+            verificaLetraDigitada(palavraSecreta, input);
+        }
     }
 }
 
 function verificaLetraDigitada(palavra, letraDigitada) {
-    var letra = formataTexto(letraDigitada);
     var achouLetra = false;
 
-    if(!listaLetrasDigitadas.includes(letra)) listaLetrasDigitadas.push(letra); else return;
+    if(!listaLetrasDigitadas.includes(letraDigitada)) listaLetrasDigitadas.push(letraDigitada); else return;
 
     for(var i = 0; i < palavra.length; i++) {
-        if(letra == palavra[i]) {
-            letraCorreta(letra, i);
+        if(letraDigitada == palavra[i]) {
+            letraCorreta(letraDigitada, i);
             achouLetra = true;
         }
     }
 
-    if(!achouLetra) letraIncorreta(tela, letra);
+    if(!achouLetra) letraIncorreta(tela, letraDigitada);
 }
 
 //Funções
