@@ -28,11 +28,14 @@ document.addEventListener("keydown", verificaSeEhLetra);
 // Tabuleiro
 var tela = document.querySelector(".tabuleiro");
 var pintura = tela.getContext("2d");
-var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "JAVASCRIPT", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
+var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
 
-var listaLetrasPosicao = [];
+var listaLetrasPosicaoX = [];
+var letrasPosicaoY = "";
+var letrasTamanho = "";
 var listaLetrasDigitadas = [];
 var palavraSecreta = "";
+var distanciaLetra = 0;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -44,6 +47,8 @@ function desenhaLinhas(canvas, quantidadeLinhas) {
     var linhaAltura = 5;
     var linhaPosX = espacoEntreLinhas / 2;
     var linhaPosY = Math.round((tabuleiroAltura / 1.2) - (linhaAltura / 1.2)); // Coloca o meio da linha no meio do tabuleiro
+    letrasTamanho = linhaPosX + (linhaLargura / 3);
+    letrasPosicaoY = linhaPosY - (linhaAltura * 2);
 
     pintura.clearRect(0, 0, tabuleiroLargura, tabuleiroAltura);
 
@@ -51,26 +56,20 @@ function desenhaLinhas(canvas, quantidadeLinhas) {
         pintura.fillStyle = "#0A3871";
         pintura.fillRect(linhaPosX, linhaPosY, linhaLargura, linhaAltura);
 
-        // Em desenvolvimento
-        // var tamFonte = linhaLargura + "px";
-        // pintura.font = tamFonte + " arial";
-        // pintura.fillText("A", linhaPosX, linhaPosY - 40); // + espaco / 1.5
-        // Em desenvolvimento
-
-        listaLetrasPosicao.push(linhaPosX);
+        listaLetrasPosicaoX.push(linhaPosX + (linhaLargura / 3));
         linhaPosX += linhaLargura + espacoEntreLinhas;
     }
 }
 
 function criaNovoJogo() {
-    listaLetrasPosicao = [];
+    listaLetrasPosicaoX = [];
     listaLetrasDigitadas = [];
     palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas);
     desenhaPalavra(palavraSecreta);
 }
 
-function desenhaTexto(letra, cor, x, y) {
-    pintura.font = "50px arial";
+function desenhaTexto(letra, tam, cor, x, y) {
+    pintura.font = tam + "px arial";
     pintura.fillStyle = cor;
     pintura.fillText(letra, x, y);
 }
@@ -90,11 +89,12 @@ function formataTexto(texto) {
 }
 
 function letraCorreta(letraDigitada, posicao) {
-    desenhaTexto(letraDigitada, "#0A3871", listaLetrasPosicao[posicao], 500);
+    desenhaTexto(letraDigitada, letrasTamanho, "#0A3871", listaLetrasPosicaoX[posicao], letrasPosicaoY);
 }
 
 function letraIncorreta(letraDigitada) {
-    desenhaTexto(letraDigitada, "#495057", 300, 750);
+    desenhaTexto(letraDigitada, 80, "#495057", distanciaLetra, 750);
+    distanciaLetra += 60;
 }
 
 function verificaSeEhLetra(evento) {
