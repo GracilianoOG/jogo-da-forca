@@ -36,6 +36,7 @@ var letrasTamanho = "";
 var listaLetrasDigitadas = [];
 var palavraSecreta = "";
 var distanciaLetra = tela.width / 3;
+const maxErros = 9;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -99,7 +100,7 @@ function letraCorreta(letraDigitada, posicao) {
 function letraIncorreta(canvas, letraDigitada) {
     desenhaTexto(letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
     console.log(distanciaLetra);
-    distanciaLetra += (canvas.width / 3) / 8;
+    distanciaLetra += (canvas.width / 3) / maxErros;
 }
 
 function verificaSeEhLetra(evento) {
