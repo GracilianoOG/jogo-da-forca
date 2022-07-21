@@ -35,7 +35,7 @@ var letrasPosicaoY = "";
 var letrasTamanho = "";
 var listaLetrasDigitadas = [];
 var palavraSecreta = "";
-var distanciaLetra = 0;
+var distanciaLetra = tela.width / 3;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -65,6 +65,7 @@ function criaNovoJogo() {
     listaLetrasPosicaoX = [];
     listaLetrasDigitadas = [];
     palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
+    distanciaLetra = tela.width / 3;
     desenhaPalavra(palavraSecreta);
 }
 
@@ -95,9 +96,10 @@ function letraCorreta(letraDigitada, posicao) {
     desenhaTexto(letraDigitada, letrasTamanho, "#0A3871", listaLetrasPosicaoX[posicao], letrasPosicaoY);
 }
 
-function letraIncorreta(letraDigitada) {
-    desenhaTexto(letraDigitada, 80, "#495057", distanciaLetra, 750);
-    distanciaLetra += 60;
+function letraIncorreta(canvas, letraDigitada) {
+    desenhaTexto(letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
+    console.log(distanciaLetra);
+    distanciaLetra += (canvas.width / 3) / 8;
 }
 
 function verificaSeEhLetra(evento) {
@@ -121,7 +123,7 @@ function verificaLetraDigitada(palavra, letraDigitada) {
         }
     }
 
-    if(!achouLetra) letraIncorreta(letra);
+    if(!achouLetra) letraIncorreta(tela, letra);
 }
 
 //Funções
