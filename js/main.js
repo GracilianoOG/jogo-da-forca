@@ -28,7 +28,7 @@ document.addEventListener("keydown", verificaSeEhLetra);
 // Tabuleiro
 var tela = document.querySelector(".tabuleiro");
 var pintura = tela.getContext("2d");
-var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS"];
+var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ"];
 
 var listaLetrasPosicaoX = [];
 var letrasPosicaoY = "";
@@ -64,7 +64,7 @@ function desenhaLinhas(canvas, quantidadeLinhas) {
 function criaNovoJogo() {
     listaLetrasPosicaoX = [];
     listaLetrasDigitadas = [];
-    palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas);
+    palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
     desenhaPalavra(palavraSecreta);
 }
 
@@ -75,8 +75,11 @@ function desenhaTexto(letra, tam, cor, x, y) {
 }
 
 // Palavra Secreta - Funções
-function geraPalavraAleatoria(lista) {
-    return lista[Math.floor(Math.random() * lista.length)]
+function geraPalavraAleatoria(lista, ultimaPalavra) {
+    var posicaoAleatoria = Math.floor(Math.random() * lista.length);
+    if(lista[posicaoAleatoria] == ultimaPalavra)
+        return posicaoAleatoria != 0 ? lista[posicaoAleatoria - 1] : lista[1];
+    return lista[posicaoAleatoria];
 }
 
 function desenhaPalavra(palavra) {
@@ -130,7 +133,6 @@ function trocaDePagina(pagAntiga, pagNova) {
 // Botões - Funções
 function comecaJogo() {
     trocaDePagina(pagPrincipal, pagJogo);
-    // Gera palavra aleatória no tabuleiro()
     criaNovoJogo();
 }
 
@@ -140,6 +142,7 @@ function adicionaPalavra() {
 
 function salvar() {
     trocaDePagina(pagAdicionaPalavra, pagJogo);
+    criaNovoJogo();
     // Salva a nova palavra num array()
 }
 
@@ -149,7 +152,6 @@ function cancelar() {
 }
 
 function novoJogo() {
-    // Gera palavra aleatória no tabuleiro()
     criaNovoJogo();
 }
 
