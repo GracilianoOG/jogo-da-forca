@@ -36,12 +36,6 @@ body {
     gap: 1.5rem;
 }
 
-.container-palavra {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-}
-
 .invisivel {
     display: none;
 }
