@@ -71,7 +71,7 @@ function criaNovoJogo() {
 }
 
 function desenhaTexto(letra, tam, cor, x, y) {
-    pintura.font = tam + "px arial";
+    pintura.font = tam + "px Inter";
     pintura.fillStyle = cor;
     pintura.fillText(letra, x, y);
 }
@@ -103,13 +103,15 @@ function letraIncorreta(canvas, letraDigitada) {
 }
 
 function verificaSeEhLetra(evento) {
-    var input = formataTexto(evento.key);
-    var codLetra = 0;
+    if(!pagJogo.classList.contains("invisivel")) {
+        var input = formataTexto(evento.key);
+        var codLetra = 0;
 
-    if(input.length == 1) {
-        codLetra = input.charCodeAt(0);
-        if(codLetra >= 65 && codLetra <= 90) {
-            verificaLetraDigitada(palavraSecreta, input);
+        if(input.length == 1) {
+            codLetra = input.charCodeAt(0);
+            if(codLetra >= 65 && codLetra <= 90) {
+                verificaLetraDigitada(palavraSecreta, input);
+            }
         }
     }
 }
