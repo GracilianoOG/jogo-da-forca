@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,29 +11,37 @@
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/botao.css">
     <link rel="stylesheet" href="css/placeholder.css">
+    <link rel="stylesheet" href="css/pagina-principal.css">
+    <link rel="stylesheet" href="css/pagina-adiciona-palavra.css">
+    <link rel="stylesheet" href="css/pagina-jogo.css">
     <link rel="stylesheet" href="css/rodape.css">
 
     <!-- Fonte Inter | Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
 
     <title>Jogo da Forca</title>
 </head>
+
 <body>
     <header class="cabecalho container">
         <img src="img/logo.svg" alt="Logo da Alura" class="logo">
     </header>
     <main>
         <div class="container">
+            <!-- Página Principal -->
             <div class="container-conteudo pagina-principal">
                 <button id="botao-comeca-jogo" class="botao botao-escuro" type="button">Começar a jogar</button>
-                <button id="botao-adiciona-palavra" class="botao botao-claro" type="button">Adicionar nova palavra</button>
+                <button id="botao-adiciona-palavra" class="botao botao-claro" type="button">Adicionar nova
+                    palavra</button>
             </div>
 
+            <!-- Página Adiciona Palavra -->
             <div class="container-conteudo pagina-adiciona-palavra invisivel">
                 <div class="container-campo">
-                    <textarea id="campo-adiciona-palavra" class="campo-adiciona-palavra" placeholder="Digite uma palavra ou frase" maxlength="8"></textarea>
+                    <textarea id="campo-adiciona-palavra" class="campo-adiciona-palavra"
+                        placeholder="Digite uma palavra ou frase" maxlength="8"></textarea>
                     <label for="campo-adiciona-palavra" class="aviso-max-letras">Máx. de 8 letras</label>
                 </div>
                 <div class="container-palavra">
@@ -41,6 +50,7 @@
                 </div>
             </div>
 
+            <!-- Página do Jogo -->
             <div class="container-conteudo pagina-jogo invisivel">
                 <div class="container-tabuleiro">
                     <canvas class="tabuleiro" width="1280" height="800"></canvas>
@@ -55,11 +65,16 @@
     <footer class="rodape">
         <p class="rodape-autor">Gabriel Graciliano &copy; 2022</p>
         <ul class="social-medias">
-            <li><a href="https://www.linkedin.com/in/gabrielgmbarros" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg" alt="Perfil do Linkedin" class="social-icone"></a></li>
-            <li><a href="https://github.com/GracilianoOG" target="_blank"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="Perfil do Github" class="social-icone"></a></li>
+            <li><a href="https://www.linkedin.com/in/gabrielgmbarros" target="_blank"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg"
+                        alt="Perfil do Linkedin" class="social-icone"></a></li>
+            <li><a href="https://github.com/GracilianoOG" target="_blank"><img
+                        src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg"
+                        alt="Perfil do Github" class="social-icone"></a></li>
         </ul>
     </footer>
 
     <script src="js/main.js"></script>
 </body>
+
 </html>

@@ -15,6 +15,13 @@
     color: var(--dark-blue);
 }
 
+/* Logo da página */
+.logo {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+}
+
 /* Redes Sociais */
 .social-medias {
     display: flex;
