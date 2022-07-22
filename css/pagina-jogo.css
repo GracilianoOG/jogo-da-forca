@@ -25,3 +25,12 @@
         height: 70%;
     }
 }
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+    .pagina-jogo {
+        justify-content: center;
+        gap: 2rem
+    }
+}

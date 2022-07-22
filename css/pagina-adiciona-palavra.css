@@ -47,3 +47,12 @@
         height: 60%;
     }
 }
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+    .pagina-adiciona-palavra {
+        justify-content: center;
+        gap: 2rem
+    }
+}

@@ -39,12 +39,3 @@ body {
 .invisivel {
     display: none;
 }
-
-/* Desktop */
-@media screen and (min-width: 1024px) {
-
-    .container-conteudo {
-        justify-content: center;
-        gap: 2rem
-    }
-}
