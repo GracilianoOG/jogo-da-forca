@@ -36,6 +36,33 @@ body {
     gap: 1.5rem;
 }
 
+/* Logo da página */
+.logo {
+    position: absolute;
+    top: 24px;
+    left: 16px;
+    width: 1.5rem;
+}
+
 .invisivel {
     display: none;
+}
+
+/* Tablets */
+@media screen and (min-width: 768px) {
+
+    .logo {
+        top: 75px;
+        left: 40px;
+        width: 2rem;
+    }
+}
+
+/* Desktop */
+@media screen and (min-width: 1024px) {
+
+    .logo {
+        top: 24px;
+        left: 75px;
+    }
 }

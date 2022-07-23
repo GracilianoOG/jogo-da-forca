@@ -1,6 +1,9 @@
 .container-botao {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
     gap: 1rem;
 }
 
@@ -12,7 +15,8 @@
     text-decoration: none;
     text-align: center;
     border-radius: 24px;
-    width: 340px;
+    width: 90%;
+    max-width: 340px;
     padding: 1.5rem 0;
 }
 
@@ -38,7 +42,7 @@
 
 #botao-adiciona-palavra {
     padding: 2rem 0;
-    width: 320px;
+    max-width: 320px;
 }
 
 /* Tablets */
@@ -53,6 +57,6 @@
 
     #botao-adiciona-palavra {
         padding: 2.5rem 0;
-        width: 340px;
+        max-width: 340px;
     }
 }

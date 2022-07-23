@@ -4,9 +4,11 @@
 }
 
 .container-tabuleiro {
-    width: 280px;
-    height: 60%;
-    max-height: 900px;
+    width: 90%;
+    max-width: 1280px;
+
+    height: 45%;
+    max-height: 800px;
 }
 
 .tabuleiro {
@@ -21,13 +23,18 @@
 @media screen and (min-width: 768px) {
 
     .container-tabuleiro {
-        width: 450px;
-        height: 70%;
+        width: 75%;
+        height: 60%;
     }
 }
 
 /* Desktop */
 @media screen and (min-width: 1024px) {
+
+    .container-tabuleiro {
+        width: 60%;
+        height: 75%;
+    }
 
     .pagina-jogo {
         justify-content: center;

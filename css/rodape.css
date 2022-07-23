@@ -15,13 +15,6 @@
     color: var(--dark-blue);
 }
 
-/* Logo da página */
-.logo {
-    position: absolute;
-    top: 24px;
-    left: 16px;
-}
-
 /* Redes Sociais */
 .social-medias {
     display: flex;
@@ -33,22 +26,8 @@
     width: 1.5rem;
 }
 
-/* Tablets */
-@media screen and (min-width: 768px) {
-
-    .logo {
-        top: 75px;
-        left: 40px;
-    }
-}
-
 /* Desktop */
 @media screen and (min-width: 1024px) {
-
-    .logo {
-        top: 40px;
-        left: 40px;
-    }
 
     .social-medias {
         margin-top: 0.5rem;
