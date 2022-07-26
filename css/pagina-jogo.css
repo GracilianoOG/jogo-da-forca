@@ -5,10 +5,10 @@
 
 .container-tabuleiro {
     width: 90%;
-    max-width: 1280px;
+    max-width: 640px;
 
     height: 45%;
-    max-height: 800px;
+    max-height: 480px;
 }
 
 .tabuleiro {
@@ -31,10 +31,10 @@
 /* Desktop */
 @media screen and (min-width: 1024px) {
 
-    .container-tabuleiro {
+    /* .container-tabuleiro {
         width: 60%;
         height: 75%;
-    }
+    } */
 
     .pagina-jogo {
         justify-content: center;
