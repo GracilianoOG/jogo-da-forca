@@ -78,9 +78,10 @@ function desenhaTexto(letra, tam, cor, x, y) {
 
 // Palavra Secreta - Funções
 function geraPalavraAleatoria(lista, ultimaPalavra) {
-    var posicaoAleatoria = Math.floor(Math.random() * lista.length);
+    var tamanhoLista = lista.length;
+    var posicaoAleatoria = Math.floor(Math.random() * tamanhoLista);
     if(lista[posicaoAleatoria] == ultimaPalavra)
-        return posicaoAleatoria != 0 ? lista[posicaoAleatoria - 1] : lista.slice(-1);
+        return posicaoAleatoria != 0 ? lista[posicaoAleatoria - 1] : lista[tamanhoLista - 1];
     return lista[posicaoAleatoria];
 }
 
