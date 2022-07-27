@@ -36,7 +36,8 @@ var letrasTamanho = "";
 var listaLetrasDigitadas = [];
 var palavraSecreta = "";
 var distanciaLetra = tela.width / 3;
-const maxErros = 9;
+const maxErros = 6;
+var erros = 0;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -62,12 +63,111 @@ function desenhaLinhas(canvas, quantidadeLinhas) {
     }
 }
 
+function desenhaBaseDaForca() {
+    pintura.strokeStyle = "#0A3871";
+    pintura.lineWidth = 5;
+
+    var tabuleiroLargura = tela.width;
+    var tabuleiroAltura = tela.height;
+
+    var umTercoTabuleiro = tabuleiroLargura / 3;
+    var umQuartoDaBase = umTercoTabuleiro / 4;
+    var tresQuartosDaBase = umQuartoDaBase * 3;
+    var meioVerticalDaTela = tabuleiroAltura / 2;
+
+    // Base Principal
+    pintura.beginPath();
+    pintura.moveTo(umTercoTabuleiro, meioVerticalDaTela);
+    pintura.lineTo(umTercoTabuleiro * 2, meioVerticalDaTela);
+    pintura.stroke();
+
+    // Apoio
+    pintura.beginPath();
+    pintura.moveTo(umTercoTabuleiro + umQuartoDaBase, 0);
+    pintura.lineTo(umTercoTabuleiro + umQuartoDaBase, meioVerticalDaTela);
+    pintura.stroke();
+
+    // Apoio Corda
+    pintura.beginPath();
+    pintura.moveTo(umTercoTabuleiro + umQuartoDaBase, 3);
+    pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 3);
+    pintura.stroke();
+
+    // Corda
+    pintura.beginPath();
+    pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 0);
+    pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 60);
+    pintura.stroke();
+}
+
+function desenhaForca() {
+    pintura.strokeStyle = "#609ED4";
+    pintura.lineWidth = 5;
+
+    var tabuleiroLargura = tela.width;
+
+    var umTercoTabuleiro = tabuleiroLargura / 3;
+    var umQuartoDaBase = umTercoTabuleiro / 4;
+    var tresQuartosDaBase = umQuartoDaBase * 3;
+
+    switch(erros) {
+        // Cabeça
+        case 1:
+        pintura.beginPath();
+        pintura.arc(umTercoTabuleiro + tresQuartosDaBase, 100, 40, 0, 2 * Math.PI);
+        pintura.stroke();
+        break;
+
+        // Tronco
+        case 2:
+        pintura.beginPath();
+        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 140);
+        pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 290);
+        pintura.stroke();
+        break;
+
+        // Perna esquerda
+        case 3:
+        pintura.beginPath();
+        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 290);
+        pintura.lineTo((umTercoTabuleiro - 45) + tresQuartosDaBase, 360);
+        pintura.stroke();
+        break;
+
+        // Perna direita
+        case 4:
+        pintura.beginPath();
+        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 290);
+        pintura.lineTo((umTercoTabuleiro + 45) + tresQuartosDaBase, 360);
+        pintura.stroke();
+        break;
+
+        // Braço esquerdo
+        case 5:
+        pintura.beginPath();
+        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 150);
+        pintura.lineTo((umTercoTabuleiro - 45) + tresQuartosDaBase, 250);
+        pintura.stroke();
+        break;
+
+        // Braço direito
+        case 6:
+        pintura.beginPath();
+        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 150);
+        pintura.lineTo((umTercoTabuleiro + 45) + tresQuartosDaBase, 250);
+        pintura.stroke();
+        break;
+    }
+}
+
 function criaNovoJogo() {
     listaLetrasPosicaoX = [];
     listaLetrasDigitadas = [];
     palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
     distanciaLetra = tela.width / 3;
+    erros = 0;
     desenhaPalavra(palavraSecreta);
+    desenhaBaseDaForca();
 }
 
 function desenhaTexto(letra, tam, cor, x, y) {
@@ -101,10 +201,11 @@ function letraCorreta(letraDigitada, posicao) {
 function letraIncorreta(canvas, letraDigitada) {
     desenhaTexto(letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
     distanciaLetra += (canvas.width / 3) / maxErros;
+    desenhaForca();
 }
 
 function verificaSeEhLetra(evento) {
-    if(!pagJogo.classList.contains("invisivel")) {
+    if(!pagJogo.classList.contains("invisivel") && !(erros == maxErros)) {
         var input = formataTexto(evento.key);
         var codLetra = 0;
 
@@ -129,7 +230,10 @@ function verificaLetraDigitada(palavra, letraDigitada) {
         }
     }
 
-    if(!achouLetra) letraIncorreta(tela, letraDigitada);
+    if(!achouLetra) {
+        erros++;
+        letraIncorreta(tela, letraDigitada);
+    }
 }
 
 //Funções
