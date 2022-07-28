@@ -1,17 +1,17 @@
 // Botões
-var btnComecaJogo = document.querySelector("#botao-comeca-jogo");
-var btnAdicionaPalavra = document.querySelector("#botao-adiciona-palavra");
+const btnComecaJogo = document.querySelector("#botao-comeca-jogo");
+const btnAdicionaPalavra = document.querySelector("#botao-adiciona-palavra");
 
-var btnSalvar = document.querySelector("#botao-salvar");
-var btnCancelar = document.querySelector("#botao-cancelar");
+const btnSalvar = document.querySelector("#botao-salvar");
+const btnCancelar = document.querySelector("#botao-cancelar");
 
-var btnNovoJogo = document.querySelector("#botao-novo-jogo");
-var btnDesistir = document.querySelector("#botao-desistir");
+const btnNovoJogo = document.querySelector("#botao-novo-jogo");
+const btnDesistir = document.querySelector("#botao-desistir");
 
 // Páginas
-var pagPrincipal = document.querySelector(".pagina-principal");
-var pagAdicionaPalavra = document.querySelector(".pagina-adiciona-palavra");
-var pagJogo = document.querySelector(".pagina-jogo");
+const pagPrincipal = document.querySelector(".pagina-principal");
+const pagAdicionaPalavra = document.querySelector(".pagina-adiciona-palavra");
+const pagJogo = document.querySelector(".pagina-jogo");
 
 // Eventos
 btnComecaJogo.addEventListener("click", comecaJogo);
@@ -23,57 +23,64 @@ btnCancelar.addEventListener("click", cancelar);
 btnNovoJogo.addEventListener("click", novoJogo);
 btnDesistir.addEventListener("click", desistir);
 
-document.addEventListener("keydown", verificaSeEhLetra);
+document.addEventListener("keydown", validaCaractere);
 
 // Tabuleiro
-var tela = document.querySelector(".tabuleiro");
-var pintura = tela.getContext("2d");
-var listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ"];
+const tela = document.querySelector(".tabuleiro");
+const pintura = tela.getContext("2d");
+let listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ"];
 
-var listaLetrasPosicaoX = [];
-var letrasPosicaoY = "";
-var letrasTamanho = "";
-var listaLetrasDigitadas = [];
-var palavraSecreta = "";
-var distanciaLetra = tela.width / 3;
+let listaLetrasPosicaoX = [];
+let letrasPosicaoY = 0;
+let letrasTamanho = 0;
+let listaLetrasDigitadas = [];
+let palavraSecreta = "";
+let distanciaLetra = tela.width / 3;
 const maxErros = 6;
-var erros = 0;
+let erros = 0;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
-    var tabuleiroLargura = canvas.width;
-    var tabuleiroAltura = canvas.height;
-    var espacoEntreLinhas = (tabuleiroLargura / quantidadeLinhas) * 0.2; // O espaço entre as linhas corresponde a x porcento da linha em si
+    const tabuleiroLargura = canvas.width;
+    const tabuleiroAltura = canvas.height;
 
-    var linhaLargura = (tabuleiroLargura / quantidadeLinhas) - espacoEntreLinhas; // Calcula o tamanho da linha, descontando o espaço em branco
-    var linhaAltura = 5;
-    var linhaPosX = espacoEntreLinhas / 2;
-    var linhaPosY = Math.round((tabuleiroAltura / 1.2) - (linhaAltura / 1.2)); // Coloca o meio da linha no meio do tabuleiro
+    let listaPosicoes = [];
+
+    // O espaço entre as linhas corresponde a 20% porcento da linha em si
+    const espacoEntreLinhas = (tabuleiroLargura / quantidadeLinhas) * 0.2;
+
+    // Calcula o tamanho da linha, descontando o espaço em branco
+    const linhaLargura = (tabuleiroLargura / quantidadeLinhas) - espacoEntreLinhas;
+    const linhaAltura = 5;
+    let linhaPosX = espacoEntreLinhas / 2;
+    const linhaPosY = Math.round((tabuleiroAltura / 1.2) - (linhaAltura / 1.2)); // Coloca o meio da linha no meio do tabuleiro
     letrasTamanho = linhaPosX + (linhaLargura / 3);
     letrasPosicaoY = linhaPosY - (linhaAltura * 2);
 
     pintura.clearRect(0, 0, tabuleiroLargura, tabuleiroAltura);
 
-    for(var i = 0; i < quantidadeLinhas; i++) {
+    for(let i = 0; i < quantidadeLinhas; i++) {
         pintura.fillStyle = "#0A3871";
         pintura.fillRect(linhaPosX, linhaPosY, linhaLargura, linhaAltura);
 
-        listaLetrasPosicaoX.push(linhaPosX + (linhaLargura / 3));
+        listaPosicoes.push(linhaPosX + (linhaLargura / 3));
         linhaPosX += linhaLargura + espacoEntreLinhas;
     }
+
+    return listaPosicoes;
 }
 
 function desenhaBaseDaForca() {
     pintura.strokeStyle = "#0A3871";
     pintura.lineWidth = 5;
 
-    var tabuleiroLargura = tela.width;
-    var tabuleiroAltura = tela.height;
+    const tabuleiroLargura = tela.width;
+    const tabuleiroAltura = tela.height;
 
-    var umTercoTabuleiro = tabuleiroLargura / 3;
-    var umQuartoDaBase = umTercoTabuleiro / 4;
-    var tresQuartosDaBase = umQuartoDaBase * 3;
-    var meioVerticalDaTela = tabuleiroAltura / 2;
+    const umTercoTabuleiro = tabuleiroLargura / 3;
+    const umQuartoDaBase = umTercoTabuleiro / 4;
+    const tresQuartosDaBase = umQuartoDaBase * 3;
+    const meioVerticalDaTela = tabuleiroAltura / 2;
 
     // Base Principal
     pintura.beginPath();
@@ -104,11 +111,11 @@ function desenhaForca() {
     pintura.strokeStyle = "#609ED4";
     pintura.lineWidth = 5;
 
-    var tabuleiroLargura = tela.width;
+    const tabuleiroLargura = tela.width;
 
-    var umTercoTabuleiro = tabuleiroLargura / 3;
-    var umQuartoDaBase = umTercoTabuleiro / 4;
-    var tresQuartosDaBase = umQuartoDaBase * 3;
+    const umTercoTabuleiro = tabuleiroLargura / 3;
+    const umQuartoDaBase = umTercoTabuleiro / 4;
+    const tresQuartosDaBase = umQuartoDaBase * 3;
 
     switch(erros) {
         // Cabeça
@@ -161,13 +168,13 @@ function desenhaForca() {
 }
 
 function criaNovoJogo() {
-    listaLetrasPosicaoX = [];
     listaLetrasDigitadas = [];
     palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
     distanciaLetra = tela.width / 3;
     erros = 0;
-    desenhaPalavra(palavraSecreta);
+    listaLetrasPosicaoX = desenhaLinhas(tela, palavraSecreta.length);
     desenhaBaseDaForca();
+    console.log("Palavra: " + palavraSecreta + " Tamanho: " + palavraSecreta.length);
 }
 
 function desenhaTexto(letra, tam, cor, x, y) {
@@ -178,16 +185,11 @@ function desenhaTexto(letra, tam, cor, x, y) {
 
 // Palavra Secreta - Funções
 function geraPalavraAleatoria(lista, ultimaPalavra) {
-    var tamanhoLista = lista.length;
-    var posicaoAleatoria = Math.floor(Math.random() * tamanhoLista);
+    const tamanhoLista = lista.length;
+    const posicaoAleatoria = Math.floor(Math.random() * tamanhoLista);
     if(lista[posicaoAleatoria] == ultimaPalavra)
         return posicaoAleatoria != 0 ? lista[posicaoAleatoria - 1] : lista[tamanhoLista - 1];
     return lista[posicaoAleatoria];
-}
-
-function desenhaPalavra(palavra) {
-    desenhaLinhas(tela, palavra.length);
-    console.log("Palavra: " + palavra + " Tamanho: " + palavra.length);
 }
 
 function formataTexto(texto) {
@@ -204,26 +206,26 @@ function letraIncorreta(canvas, letraDigitada) {
     desenhaForca();
 }
 
-function verificaSeEhLetra(evento) {
+function validaCaractere(evento) {
     if(!pagJogo.classList.contains("invisivel") && !(erros == maxErros)) {
-        var input = formataTexto(evento.key);
-        var codLetra = 0;
+        const input = formataTexto(evento.key);
 
         if(input.length == 1) {
-            codLetra = input.charCodeAt(0);
+            const codLetra = input.charCodeAt(0);
             if(codLetra >= 65 && codLetra <= 90) {
-                verificaLetraDigitada(palavraSecreta, input);
+                verificaLetra(palavraSecreta, input);
             }
         }
     }
 }
 
-function verificaLetraDigitada(palavra, letraDigitada) {
-    var achouLetra = false;
-
+function verificaLetra(palavra, letraDigitada) {
+    
     if(!listaLetrasDigitadas.includes(letraDigitada)) listaLetrasDigitadas.push(letraDigitada); else return;
+    
+    let achouLetra = false;
 
-    for(var i = 0; i < palavra.length; i++) {
+    for(let i = 0; i < palavra.length; i++) {
         if(letraDigitada == palavra[i]) {
             letraCorreta(letraDigitada, i);
             achouLetra = true;
