@@ -38,6 +38,8 @@ let palavraSecreta = "";
 let distanciaLetra = tela.width / 3;
 const maxErros = 6;
 let erros = 0;
+let acertos = 0;
+let jogoRolando = false;
 
 // Tabuleiro - Funções
 function desenhaLinhas(canvas, quantidadeLinhas) {
@@ -172,15 +174,17 @@ function criaNovoJogo() {
     palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
     distanciaLetra = tela.width / 3;
     erros = 0;
+    acertos = 0;
+    jogoRolando = true;
     listaLetrasPosicaoX = desenhaLinhas(tela, palavraSecreta.length);
     desenhaBaseDaForca();
     console.log("Palavra: " + palavraSecreta + " Tamanho: " + palavraSecreta.length);
 }
 
-function desenhaTexto(letra, tam, cor, x, y) {
+function desenhaTexto(texto, tam, cor, x, y) {
     pintura.font = tam + "px Inter";
     pintura.fillStyle = cor;
-    pintura.fillText(letra, x, y);
+    pintura.fillText(texto, x, y);
 }
 
 // Palavra Secreta - Funções
@@ -207,7 +211,7 @@ function letraIncorreta(canvas, letraDigitada) {
 }
 
 function validaCaractere(evento) {
-    if(!pagJogo.classList.contains("invisivel") && !(erros == maxErros)) {
+    if(!pagJogo.classList.contains("invisivel") && jogoRolando) {
         const input = formataTexto(evento.key);
 
         if(input.length == 1) {
@@ -227,6 +231,7 @@ function verificaLetra(palavra, letraDigitada) {
 
     for(let i = 0; i < palavra.length; i++) {
         if(letraDigitada == palavra[i]) {
+            acertos++;
             letraCorreta(letraDigitada, i);
             achouLetra = true;
         }
@@ -236,9 +241,39 @@ function verificaLetra(palavra, letraDigitada) {
         erros++;
         letraIncorreta(tela, letraDigitada);
     }
+
+    verificaSituacaoDoJogo();
 }
 
-//Funções
+// Verifica o "placar" do jogo
+function verificaSituacaoDoJogo() {
+    if(perdeuJogo()) {perdeuJogoMensagem(); return;}
+    if(venceuJogo()) {venceuJogoMensagem(); return;}
+}
+
+function perdeuJogo() {
+    if(erros == maxErros) {
+        return true;
+    }
+}
+
+function perdeuJogoMensagem() {
+    desenhaTexto("Você Perdeu!", 40, "#FF0000", 900, 250);
+    jogoRolando = false;
+}
+
+function venceuJogo() {
+    if(acertos == palavraSecreta.length) {
+        return true;
+    }
+}
+
+function venceuJogoMensagem() {
+    desenhaTexto("Você Ganhou!", 40, "#00FF00", 900, 250);
+    jogoRolando = false;
+}
+
+// Troca de "página" com javascript
 function trocaDePagina(pagAntiga, pagNova) {
     pagAntiga.classList.add("invisivel");
     pagNova.classList.remove("invisivel");
