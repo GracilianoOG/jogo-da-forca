@@ -39,6 +39,8 @@ let listaLetrasDigitadas = [];
 let palavraSecreta = "";
 let distanciaLetra = tela.width / 3;
 const maxErros = 6;
+const minCaracteres = 2;
+const maxCaracteres = 8;
 let erros = 0;
 let acertos = 0;
 let jogoRolando = false;
@@ -275,13 +277,47 @@ function venceuJogoMensagem() {
 }
 
 // Funções do campo de texto
-function limpaCampo() {
-    return "";
+function limpaCampo(campo) {
+    campo.value = "";
 }
 
 function adicionaNovaPalavra(lista, novaPalavra) {
     lista.push(formataTexto(novaPalavra));
     console.log(lista);
+}
+
+function verificaTamanhoDaPalavra(palavra) {
+    if(palavra.length == 0) {
+        alert("Por favor, insira uma palavra!");
+        return;
+    } else if(palavra.length < minCaracteres) {
+        alert("Palavra inserida é pequena demais! Precisa haver no mínimo " + minCaracteres + " letras!");
+        return;
+    } else if (palavra.length > maxCaracteres) {
+        alert("Palavra inserida é grande demais! Precisa haver no máximo " + maxCaracteres + " letras!");
+        return;
+    }
+    validaNovaPalavra(formataTexto(campoTexto.value));
+}
+
+function validaNovaPalavra(palavra) {
+    for(let i = 0; i < palavra.length; i++) {
+        let letra = palavra[i];
+        let codLetra = letra.charCodeAt(0);
+        if(!(codLetra >= 65 && codLetra <= 90)) {
+            alert("Palavra inserida contém caractere(s) inválido(s)!");
+            return;
+        }
+    }
+    verificaPalavraRepetida(listaPalavrasSecretas, palavra);
+}
+
+function verificaPalavraRepetida(lista, palavra) {
+    if(!lista.includes(palavra)) {
+        adicionaNovaPalavra(lista, palavra);
+        return;
+    }
+    alert("Palavra inserida é repetida!");
 }
 
 // Troca de "página" com javascript
@@ -298,13 +334,12 @@ function comecaJogo() {
 
 function adicionaPalavra() {
     trocaDePagina(pagPrincipal, pagAdicionaPalavra);
-    campoTexto.value = limpaCampo();
+    limpaCampo(campoTexto);
 }
 
 function salvaNovaPalavra() {
-    trocaDePagina(pagAdicionaPalavra, pagJogo);
-    criaNovoJogo();
-    adicionaNovaPalavra(listaPalavrasSecretas, campoTexto.value);
+    verificaTamanhoDaPalavra(formataTexto(campoTexto.value));
+    limpaCampo(campoTexto);
 }
 
 function cancelaAdicaoDePalavra() {
