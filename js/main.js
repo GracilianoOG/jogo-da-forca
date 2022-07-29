@@ -8,6 +8,8 @@ const btnCancelar = document.querySelector("#botao-cancelar");
 const btnNovoJogo = document.querySelector("#botao-novo-jogo");
 const btnDesistir = document.querySelector("#botao-desistir");
 
+const campoTexto = document.querySelector("#campo-adiciona-palavra");
+
 // Páginas
 const pagPrincipal = document.querySelector(".pagina-principal");
 const pagAdicionaPalavra = document.querySelector(".pagina-adiciona-palavra");
@@ -272,6 +274,16 @@ function venceuJogoMensagem() {
     jogoRolando = false;
 }
 
+// Funções do campo de texto
+function limpaCampo() {
+    return "";
+}
+
+function adicionaNovaPalavra(lista, novaPalavra) {
+    lista.push(formataTexto(novaPalavra));
+    console.log(lista);
+}
+
 // Troca de "página" com javascript
 function trocaDePagina(pagAntiga, pagNova) {
     pagAntiga.classList.add("invisivel");
@@ -286,17 +298,17 @@ function comecaJogo() {
 
 function adicionaPalavra() {
     trocaDePagina(pagPrincipal, pagAdicionaPalavra);
+    campoTexto.value = limpaCampo();
 }
 
 function salvaNovaPalavra() {
     trocaDePagina(pagAdicionaPalavra, pagJogo);
     criaNovoJogo();
-    // Salva a nova palavra num array()
+    adicionaNovaPalavra(listaPalavrasSecretas, campoTexto.value);
 }
 
 function cancelaAdicaoDePalavra() {
     trocaDePagina(pagAdicionaPalavra, pagPrincipal);
-    // Limpa o campo de texto()
 }
 
 function novoJogo() {
