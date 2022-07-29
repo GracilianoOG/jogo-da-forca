@@ -17,11 +17,11 @@ const pagJogo = document.querySelector(".pagina-jogo");
 btnComecaJogo.addEventListener("click", comecaJogo);
 btnAdicionaPalavra.addEventListener("click", adicionaPalavra);
 
-btnSalvar.addEventListener("click", salvar);
-btnCancelar.addEventListener("click", cancelar);
+btnSalvar.addEventListener("click", salvaNovaPalavra);
+btnCancelar.addEventListener("click", cancelaAdicaoDePalavra);
 
 btnNovoJogo.addEventListener("click", novoJogo);
-btnDesistir.addEventListener("click", desistir);
+btnDesistir.addEventListener("click", desisteDoJogo);
 
 document.addEventListener("keydown", validaCaractere);
 
@@ -188,10 +188,10 @@ function desenhaTexto(texto, tam, cor, x, y) {
 }
 
 // Palavra Secreta - Funções
-function geraPalavraAleatoria(lista, ultimaPalavra) {
+function geraPalavraAleatoria(lista, ultimaPalavraSorteada) {
     const tamanhoLista = lista.length;
     const posicaoAleatoria = Math.floor(Math.random() * tamanhoLista);
-    if(lista[posicaoAleatoria] == ultimaPalavra)
+    if(lista[posicaoAleatoria] == ultimaPalavraSorteada)
         return posicaoAleatoria != 0 ? lista[posicaoAleatoria - 1] : lista[tamanhoLista - 1];
     return lista[posicaoAleatoria];
 }
@@ -213,7 +213,6 @@ function letraIncorreta(canvas, letraDigitada) {
 function validaCaractere(evento) {
     if(!pagJogo.classList.contains("invisivel") && jogoRolando) {
         const input = formataTexto(evento.key);
-
         if(input.length == 1) {
             const codLetra = input.charCodeAt(0);
             if(codLetra >= 65 && codLetra <= 90) {
@@ -289,13 +288,13 @@ function adicionaPalavra() {
     trocaDePagina(pagPrincipal, pagAdicionaPalavra);
 }
 
-function salvar() {
+function salvaNovaPalavra() {
     trocaDePagina(pagAdicionaPalavra, pagJogo);
     criaNovoJogo();
     // Salva a nova palavra num array()
 }
 
-function cancelar() {
+function cancelaAdicaoDePalavra() {
     trocaDePagina(pagAdicionaPalavra, pagPrincipal);
     // Limpa o campo de texto()
 }
@@ -304,6 +303,6 @@ function novoJogo() {
     criaNovoJogo();
 }
 
-function desistir() {
+function desisteDoJogo() {
     trocaDePagina(pagJogo, pagPrincipal);
 }
