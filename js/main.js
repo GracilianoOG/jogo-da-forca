@@ -182,7 +182,6 @@ function criaNovoJogo() {
     jogoRolando = true;
     listaLetrasPosicaoX = desenhaLinhas(tela, palavraSecreta.length);
     desenhaBaseDaForca();
-    console.log("Palavra: " + palavraSecreta + " Tamanho: " + palavraSecreta.length);
 }
 
 function desenhaTexto(texto, tam, cor, x, y) {
@@ -283,7 +282,6 @@ function limpaCampo(campo) {
 
 function adicionaNovaPalavra(lista, novaPalavra) {
     lista.push(formataTexto(novaPalavra));
-    console.log(lista);
 }
 
 function verificaTamanhoDaPalavra(palavra) {
