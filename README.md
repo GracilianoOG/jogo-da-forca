@@ -35,9 +35,13 @@ Caso queira, poderá inserir suas próprias palavras para customizar a experienc
 ## 📆 Possíveis atualizações futuras
 
 * Revisão do código
-    * Separar melhor as funções e arquivos
-    * Diminuir o tamanho do código
-    * Diminuir código repetido
+  * Separar melhor as funções e arquivos
+  * Diminuir o tamanho do código
+  * Diminuir código repetido
+* Adicionar efeitos visuais
+  * Nos botões
+  * Quando inserir palavras corretas ou incorretas
+  * Outros
 
 ## 📌 Mais informações
 
