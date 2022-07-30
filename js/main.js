@@ -30,7 +30,7 @@ document.addEventListener("keydown", validaCaractere);
 // Tabuleiro
 const tela = document.querySelector(".tabuleiro");
 const pintura = tela.getContext("2d");
-let listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ"];
+let listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ", "RUBY", "REACT", "NODEJS", "LINUX", "WINDOWS", "MAC", "APPLE", "CODE"];
 
 let listaLetrasPosicaoX = [];
 let letrasPosicaoY = 0;
