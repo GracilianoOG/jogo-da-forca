@@ -1,197 +1,105 @@
+import { hangman } from "./hangman.js";
+import { utility } from "./utility.js";
+
 // Botões
-const btnComecaJogo = document.querySelector("#botao-comeca-jogo");
-const btnAdicionaPalavra = document.querySelector("#botao-adiciona-palavra");
+const btnStartGame = document.querySelector("#botao-comeca-jogo");
+const btnAddWord = document.querySelector("#botao-adiciona-palavra");
 
-const btnSalvar = document.querySelector("#botao-salvar");
-const btnCancelar = document.querySelector("#botao-cancelar");
+const btnSaveWord = document.querySelector("#botao-salvar");
+const btnCancel = document.querySelector("#botao-cancelar");
 
-const btnNovoJogo = document.querySelector("#botao-novo-jogo");
-const btnDesistir = document.querySelector("#botao-desistir");
+const btnNewGame = document.querySelector("#botao-novo-jogo");
+const btnGiveUp = document.querySelector("#botao-desistir");
 
-const campoTexto = document.querySelector("#campo-adiciona-palavra");
+const fieldAddWord = document.querySelector("#campo-adiciona-palavra");
 
 // Páginas
-const pagPrincipal = document.querySelector(".pagina-principal");
-const pagAdicionaPalavra = document.querySelector(".pagina-adiciona-palavra");
-const pagJogo = document.querySelector(".pagina-jogo");
+const pagMain = document.querySelector(".pagina-principal");
+const pagAddWord = document.querySelector(".pagina-adiciona-palavra");
+const pagGameScreen = document.querySelector(".pagina-jogo");
 
-// Eventos
-btnComecaJogo.addEventListener("click", comecaJogo);
-btnAdicionaPalavra.addEventListener("click", adicionaPalavra);
+// Eventos dos botões
+btnStartGame.addEventListener("click", () => {
+    utility.switchPage(pagMain, pagGameScreen);
+    createNewGame();
+});
+btnAddWord.addEventListener("click", () => {
+    utility.switchPage(pagMain, pagAddWord);
+    clearField(fieldAddWord);
+});
 
-btnSalvar.addEventListener("click", salvaNovaPalavra);
-btnCancelar.addEventListener("click", cancelaAdicaoDePalavra);
+btnSaveWord.addEventListener("click", () => {
+    verifyWordLength(formatText(fieldAddWord.value));
+    clearField(fieldAddWord);
+});
+btnCancel.addEventListener("click", () => utility.switchPage(pagAddWord, pagMain));
 
-btnNovoJogo.addEventListener("click", novoJogo);
-btnDesistir.addEventListener("click", desisteDoJogo);
+btnNewGame.addEventListener("click", createNewGame);
+btnGiveUp.addEventListener("click", () => utility.switchPage(pagGameScreen, pagMain));
 
 document.addEventListener("keydown", validaCaractere);
 
 // Tabuleiro
-const tela = document.querySelector(".tabuleiro");
-const pintura = tela.getContext("2d");
-let listaPalavrasSecretas = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ", "RUBY", "REACT", "NODEJS", "LINUX", "WINDOWS", "MAC", "APPLE", "CODE"];
+const gameBoard = document.querySelector(".tabuleiro");
+const gameScreen = gameBoard.getContext("2d");
+let secretWords = ["ALURA", "ORACLE", "JAVA", "PYTHON", "SUN", "CAELUM", "HTML", "CSS", "CONSOLE", "LOG", "GUJ", "RUBY", "REACT", "NODEJS", "LINUX", "WINDOWS", "MAC", "APPLE", "CODE"];
 
 let listaLetrasPosicaoX = [];
 let letrasPosicaoY = 0;
 let letrasTamanho = 0;
 let listaLetrasDigitadas = [];
 let palavraSecreta = "";
-let distanciaLetra = tela.width / 3;
+let distanciaLetra = gameBoard.width / 3;
 const maxErros = 6;
 const minCaracteres = 2;
 const maxCaracteres = 8;
 let erros = 0;
 let acertos = 0;
-let jogoRolando = false;
+let isMatch = false;
 
 // Tabuleiro - Funções
-function desenhaLinhas(canvas, quantidadeLinhas) {
-    const tabuleiroLargura = canvas.width;
-    const tabuleiroAltura = canvas.height;
+function drawWordLettersLines(canvas, qtdLines) {
+    const boardWidth = canvas.width;
+    const boardHeight = canvas.height;
 
-    let listaPosicoes = [];
+    let coordList = [];
 
     // O espaço entre as linhas corresponde a 20% porcento da linha em si
-    const espacoEntreLinhas = (tabuleiroLargura / quantidadeLinhas) * 0.2;
+    const spaceBetweenLines = (boardWidth / qtdLines) * 0.2;
 
     // Calcula o tamanho da linha, descontando o espaço em branco
-    const linhaLargura = (tabuleiroLargura / quantidadeLinhas) - espacoEntreLinhas;
-    const linhaAltura = 5;
-    let linhaPosX = espacoEntreLinhas / 2;
-    const linhaPosY = Math.round((tabuleiroAltura / 1.2) - (linhaAltura / 1.2)); // Coloca o meio da linha no meio do tabuleiro
-    letrasTamanho = linhaPosX + (linhaLargura / 3);
-    letrasPosicaoY = linhaPosY - (linhaAltura * 2);
+    const lineWidth = (boardWidth / qtdLines) - spaceBetweenLines;
+    const lineHeight = 5;
+    let lineHorizontalPos = spaceBetweenLines / 2;
+    const lineVerticalPos = Math.round((boardHeight / 1.2) - (lineHeight / 1.2)); // Coloca o meio da linha no meio do tabuleiro
+    letrasTamanho = lineHorizontalPos + (lineWidth / 3);
+    letrasPosicaoY = lineVerticalPos - (lineHeight * 2);
 
-    pintura.clearRect(0, 0, tabuleiroLargura, tabuleiroAltura);
+    gameScreen.clearRect(0, 0, boardWidth, boardHeight);
 
-    for(let i = 0; i < quantidadeLinhas; i++) {
-        pintura.fillStyle = "#0A3871";
-        pintura.fillRect(linhaPosX, linhaPosY, linhaLargura, linhaAltura);
+    for(let i = 0; i < qtdLines; i++) {
+        gameScreen.fillStyle = "#0A3871";
+        gameScreen.fillRect(lineHorizontalPos, lineVerticalPos, lineWidth, lineHeight);
 
-        listaPosicoes.push(linhaPosX + (linhaLargura / 3));
-        linhaPosX += linhaLargura + espacoEntreLinhas;
+        coordList.push(lineHorizontalPos + (lineWidth / 3));
+        lineHorizontalPos += lineWidth + spaceBetweenLines;
     }
-
-    return listaPosicoes;
+    return coordList;
 }
 
-function desenhaBaseDaForca() {
-    pintura.strokeStyle = "#0A3871";
-    pintura.lineWidth = 5;
-
-    const tabuleiroLargura = tela.width;
-    const tabuleiroAltura = tela.height;
-
-    const umTercoTabuleiro = tabuleiroLargura / 3;
-    const umQuartoDaBase = umTercoTabuleiro / 4;
-    const tresQuartosDaBase = umQuartoDaBase * 3;
-    const meioVerticalDaTela = tabuleiroAltura / 2;
-
-    // Base Principal
-    pintura.beginPath();
-    pintura.moveTo(umTercoTabuleiro, meioVerticalDaTela);
-    pintura.lineTo(umTercoTabuleiro * 2, meioVerticalDaTela);
-    pintura.stroke();
-
-    // Apoio
-    pintura.beginPath();
-    pintura.moveTo(umTercoTabuleiro + umQuartoDaBase, 0);
-    pintura.lineTo(umTercoTabuleiro + umQuartoDaBase, meioVerticalDaTela);
-    pintura.stroke();
-
-    // Apoio Corda
-    pintura.beginPath();
-    pintura.moveTo(umTercoTabuleiro + umQuartoDaBase, 3);
-    pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 3);
-    pintura.stroke();
-
-    // Corda
-    pintura.beginPath();
-    pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 0);
-    pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 60);
-    pintura.stroke();
-}
-
-function desenhaForca() {
-    pintura.strokeStyle = "#609ED4";
-    pintura.lineWidth = 5;
-
-    const tabuleiroLargura = tela.width;
-
-    const umTercoTabuleiro = tabuleiroLargura / 3;
-    const umQuartoDaBase = umTercoTabuleiro / 4;
-    const tresQuartosDaBase = umQuartoDaBase * 3;
-
-    switch(erros) {
-        // Cabeça
-        case 1:
-        pintura.beginPath();
-        pintura.arc(umTercoTabuleiro + tresQuartosDaBase, 100, 40, 0, 2 * Math.PI);
-        pintura.stroke();
-        break;
-
-        // Tronco
-        case 2:
-        pintura.beginPath();
-        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 140);
-        pintura.lineTo(umTercoTabuleiro + tresQuartosDaBase, 290);
-        pintura.stroke();
-        break;
-
-        // Perna esquerda
-        case 3:
-        pintura.beginPath();
-        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 290);
-        pintura.lineTo((umTercoTabuleiro - 45) + tresQuartosDaBase, 360);
-        pintura.stroke();
-        break;
-
-        // Perna direita
-        case 4:
-        pintura.beginPath();
-        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 290);
-        pintura.lineTo((umTercoTabuleiro + 45) + tresQuartosDaBase, 360);
-        pintura.stroke();
-        break;
-
-        // Braço esquerdo
-        case 5:
-        pintura.beginPath();
-        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 150);
-        pintura.lineTo((umTercoTabuleiro - 45) + tresQuartosDaBase, 250);
-        pintura.stroke();
-        break;
-
-        // Braço direito
-        case 6:
-        pintura.beginPath();
-        pintura.moveTo(umTercoTabuleiro + tresQuartosDaBase, 150);
-        pintura.lineTo((umTercoTabuleiro + 45) + tresQuartosDaBase, 250);
-        pintura.stroke();
-        break;
-    }
-}
-
-function criaNovoJogo() {
+function createNewGame() {
     listaLetrasDigitadas = [];
-    palavraSecreta = geraPalavraAleatoria(listaPalavrasSecretas, palavraSecreta);
-    distanciaLetra = tela.width / 3;
+    palavraSecreta = chooseRandomWord(secretWords, palavraSecreta);
+    distanciaLetra = gameBoard.width / 3;
     erros = 0;
     acertos = 0;
-    jogoRolando = true;
-    listaLetrasPosicaoX = desenhaLinhas(tela, palavraSecreta.length);
-    desenhaBaseDaForca();
-}
-
-function desenhaTexto(texto, tam, cor, x, y) {
-    pintura.font = tam + "px Inter";
-    pintura.fillStyle = cor;
-    pintura.fillText(texto, x, y);
+    isMatch = true;
+    listaLetrasPosicaoX = drawWordLettersLines(gameBoard, palavraSecreta.length);
+    hangman.drawGibbetBase(gameBoard);
 }
 
 // Palavra Secreta - Funções
-function geraPalavraAleatoria(lista, ultimaPalavraSorteada) {
+function chooseRandomWord(lista, ultimaPalavraSorteada) {
     const tamanhoLista = lista.length;
     const posicaoAleatoria = Math.floor(Math.random() * tamanhoLista);
     if(lista[posicaoAleatoria] == ultimaPalavraSorteada)
@@ -199,23 +107,23 @@ function geraPalavraAleatoria(lista, ultimaPalavraSorteada) {
     return lista[posicaoAleatoria];
 }
 
-function formataTexto(texto) {
+function formatText(texto) {
     return texto.toUpperCase().trim();
 }
 
-function letraCorreta(letraDigitada, posicao) {
-    desenhaTexto(letraDigitada, letrasTamanho, "#0A3871", listaLetrasPosicaoX[posicao], letrasPosicaoY);
+function showCorretLetter(letraDigitada, posicao) {
+    utility.drawText(gameScreen, letraDigitada, letrasTamanho, "#0A3871", listaLetrasPosicaoX[posicao], letrasPosicaoY);
 }
 
-function letraIncorreta(canvas, letraDigitada) {
-    desenhaTexto(letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
+function showIncorretLetter(canvas, letraDigitada) {
+    utility.drawText(gameScreen, letraDigitada, 60, "#495057", distanciaLetra, letrasPosicaoY + 100);
     distanciaLetra += (canvas.width / 3) / maxErros;
-    desenhaForca();
+    hangman.drawHangingMan(gameBoard, erros);
 }
 
 function validaCaractere(evento) {
-    if(!pagJogo.classList.contains("invisivel") && jogoRolando) {
-        const input = formataTexto(evento.key);
+    if(!pagGameScreen.classList.contains("invisivel") && isMatch) {
+        const input = formatText(evento.key);
         if(input.length == 1) {
             const codLetra = input.charCodeAt(0);
             if(codLetra >= 65 && codLetra <= 90) {
@@ -234,57 +142,38 @@ function verificaLetra(palavra, letraDigitada) {
     for(let i = 0; i < palavra.length; i++) {
         if(letraDigitada == palavra[i]) {
             acertos++;
-            letraCorreta(letraDigitada, i);
+            showCorretLetter(letraDigitada, i);
             achouLetra = true;
         }
     }
 
     if(!achouLetra) {
         erros++;
-        letraIncorreta(tela, letraDigitada);
+        showIncorretLetter(gameBoard, letraDigitada);
     }
 
-    verificaSituacaoDoJogo();
+    checkScoreboard();
 }
 
 // Verifica o "placar" do jogo
-function verificaSituacaoDoJogo() {
-    if(perdeuJogo()) {perdeuJogoMensagem(); return;}
-    if(venceuJogo()) {venceuJogoMensagem(); return;}
-}
-
-function perdeuJogo() {
-    if(erros == maxErros) {
-        return true;
+function checkScoreboard() {
+    if(erros === maxErros || acertos === palavraSecreta.length) {
+        const resultText = (erros === maxErros ? "Você perdeu!" : "Você ganhou!");
+        utility.drawText(gameScreen, resultText, 40, "#FF0000", 900, 250);
+        isMatch = false;
     }
-}
-
-function perdeuJogoMensagem() {
-    desenhaTexto("Você Perdeu!", 40, "#FF0000", 900, 250);
-    jogoRolando = false;
-}
-
-function venceuJogo() {
-    if(acertos == palavraSecreta.length) {
-        return true;
-    }
-}
-
-function venceuJogoMensagem() {
-    desenhaTexto("Você Ganhou!", 40, "#00FF00", 900, 250);
-    jogoRolando = false;
 }
 
 // Funções do campo de texto
-function limpaCampo(campo) {
+function clearField(campo) {
     campo.value = "";
 }
 
-function adicionaNovaPalavra(lista, novaPalavra) {
-    lista.push(formataTexto(novaPalavra));
+function addWord(lista, novaPalavra) {
+    lista.push(formatText(novaPalavra));
 }
 
-function verificaTamanhoDaPalavra(palavra) {
+function verifyWordLength(palavra) {
     if(palavra.length == 0) {
         alert("Por favor, insira uma palavra!");
         return;
@@ -295,10 +184,10 @@ function verificaTamanhoDaPalavra(palavra) {
         alert("Palavra inserida é grande demais! Precisa haver no máximo " + maxCaracteres + " letras!");
         return;
     }
-    validaNovaPalavra(formataTexto(campoTexto.value));
+    validateWord(formatText(fieldAddWord.value));
 }
 
-function validaNovaPalavra(palavra) {
+function validateWord(palavra) {
     for(let i = 0; i < palavra.length; i++) {
         let letra = palavra[i];
         let codLetra = letra.charCodeAt(0);
@@ -307,47 +196,13 @@ function validaNovaPalavra(palavra) {
             return;
         }
     }
-    verificaPalavraRepetida(listaPalavrasSecretas, palavra);
+    checkForRepeatedWord(secretWords, palavra);
 }
 
-function verificaPalavraRepetida(lista, palavra) {
+function checkForRepeatedWord(lista, palavra) {
     if(!lista.includes(palavra)) {
-        adicionaNovaPalavra(lista, palavra);
+        addWord(lista, palavra);
         return;
     }
     alert("Palavra inserida é repetida!");
-}
-
-// Troca de "página" com javascript
-function trocaDePagina(pagAntiga, pagNova) {
-    pagAntiga.classList.add("invisivel");
-    pagNova.classList.remove("invisivel");
-}
-
-// Botões - Funções
-function comecaJogo() {
-    trocaDePagina(pagPrincipal, pagJogo);
-    criaNovoJogo();
-}
-
-function adicionaPalavra() {
-    trocaDePagina(pagPrincipal, pagAdicionaPalavra);
-    limpaCampo(campoTexto);
-}
-
-function salvaNovaPalavra() {
-    verificaTamanhoDaPalavra(formataTexto(campoTexto.value));
-    limpaCampo(campoTexto);
-}
-
-function cancelaAdicaoDePalavra() {
-    trocaDePagina(pagAdicionaPalavra, pagPrincipal);
-}
-
-function novoJogo() {
-    criaNovoJogo();
-}
-
-function desisteDoJogo() {
-    trocaDePagina(pagJogo, pagPrincipal);
 }
