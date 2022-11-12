@@ -1,3 +1,5 @@
+import { utility as util } from "./utility.js";
+
 function drawCircle(canvas, xCoord, yCoord, radius) {
     const gameScreen = canvas.getContext("2d");
     gameScreen.beginPath();
@@ -15,38 +17,38 @@ function drawLine(canvas, moveToCoords, lineToCoords) {
 
 function drawGibbetBase(canvas) {
     const canvasContext = canvas.getContext("2d");
-    canvasContext.strokeStyle = "#0A3871";
+    canvasContext.strokeStyle = util.colors.primary;
     canvasContext.lineWidth = 5;
 
-    const umTercoTabuleiro = canvas.width / 3;
-    const umQuartoDaBase = umTercoTabuleiro / 4;
-    const tresQuartosDaBase = umQuartoDaBase * 3;
-    const meioVerticalDaTela = canvas.height / 2;
+    const oneThirdBoard = canvas.width / 3;
+    const aQuarterOfBase = oneThirdBoard / 4;
+    const threeQuartersOfBase = aQuarterOfBase * 3;
+    const verticalMiddleScreen = canvas.height / 2;
 
-    drawLine(canvas, [umTercoTabuleiro, meioVerticalDaTela], [umTercoTabuleiro * 2, meioVerticalDaTela]); // Base
-    drawLine(canvas, [umTercoTabuleiro + umQuartoDaBase, 0], [umTercoTabuleiro + umQuartoDaBase, meioVerticalDaTela]); // Apoio
-    drawLine(canvas, [umTercoTabuleiro + umQuartoDaBase, 3], [umTercoTabuleiro + tresQuartosDaBase, 3]); // Apoio Corda
-    drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 0], [umTercoTabuleiro + tresQuartosDaBase, 60]); // Corda
+    drawLine(canvas, [oneThirdBoard, verticalMiddleScreen], [oneThirdBoard * 2, verticalMiddleScreen]); // Base
+    drawLine(canvas, [oneThirdBoard + aQuarterOfBase, 0], [oneThirdBoard + aQuarterOfBase, verticalMiddleScreen]); // Apoio
+    drawLine(canvas, [oneThirdBoard + aQuarterOfBase, 3], [oneThirdBoard + threeQuartersOfBase, 3]); // Apoio Corda
+    drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 0], [oneThirdBoard + threeQuartersOfBase, 60]); // Corda
 }
 
-function drawHangingMan(canvas, erros) {
+function drawHangingMan(canvas, errors) {
     const canvasContext = canvas.getContext("2d");
-    canvasContext.strokeStyle = "#609ED4";
+    canvasContext.strokeStyle = util.colors.highlight;
     canvasContext.lineWidth = 5;
 
-    const umTercoTabuleiro = canvas.width / 3;
-    const umQuartoDaBase = umTercoTabuleiro / 4;
-    const tresQuartosDaBase = umQuartoDaBase * 3;
+    const oneThirdBoard = canvas.width / 3;
+    const aQuarterOfBase = oneThirdBoard / 4;
+    const threeQuartersOfBase = aQuarterOfBase * 3;
 
     const coords = {
-        0: () => { drawCircle(canvas, umTercoTabuleiro + tresQuartosDaBase, 100, 40) }, // Cabeça
-        1: () => { drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 140], [umTercoTabuleiro + tresQuartosDaBase, 290]) }, // Tronco
-        2: () => { drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 290], [(umTercoTabuleiro - 45) + tresQuartosDaBase, 360]) }, // Perna E.
-        3: () => { drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 290], [(umTercoTabuleiro + 45) + tresQuartosDaBase, 360]) }, // Perna D.
-        4: () => { drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 150], [(umTercoTabuleiro - 45) + tresQuartosDaBase, 250]) }, // Braço E.
-        5: () => { drawLine(canvas, [umTercoTabuleiro + tresQuartosDaBase, 150], [(umTercoTabuleiro + 45) + tresQuartosDaBase, 250]) } // Braço D.
+        0: () => { drawCircle(canvas, oneThirdBoard + threeQuartersOfBase, 100, 40) }, // Cabeça
+        1: () => { drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 140], [oneThirdBoard + threeQuartersOfBase, 290]) }, // Tronco
+        2: () => { drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 290], [(oneThirdBoard - 45) + threeQuartersOfBase, 360]) }, // Perna E.
+        3: () => { drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 290], [(oneThirdBoard + 45) + threeQuartersOfBase, 360]) }, // Perna D.
+        4: () => { drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 150], [(oneThirdBoard - 45) + threeQuartersOfBase, 250]) }, // Braço E.
+        5: () => { drawLine(canvas, [oneThirdBoard + threeQuartersOfBase, 150], [(oneThirdBoard + 45) + threeQuartersOfBase, 250]) } // Braço D.
     };
-    coords[erros - 1]();
+    coords[errors - 1]();
 }
 
 export const hangman = {
