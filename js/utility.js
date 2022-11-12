@@ -1,4 +1,11 @@
-// Troca de "página" com javascript
+const colors = {
+    error: "#FF0000",
+    correct: "#00FF00",
+    highlight: "#609ED4",
+    primary: "#0A3871",
+    secondary: "#495057"
+}
+
 function switchPage(pagAntiga, pagNova) {
     pagAntiga.classList.add("invisivel");
     pagNova.classList.remove("invisivel");
@@ -25,6 +32,7 @@ function formatText(text) { return text.toUpperCase().trim(); }
 function addWord(list, word) { list.push(formatText(word)); }
 
 export const utility = {
+    colors,
     switchPage,
     drawText,
     chooseRandomWord,
